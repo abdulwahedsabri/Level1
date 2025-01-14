@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mitra AI - Level 1 Truth or Dare</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #6a11cb, #2575fc);
+        overflow: hidden;
+      }
+
+      .container {
+        text-align: center;
+        color: #fff;
+        animation: fadeIn 2s ease-in-out;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .buttons {
+        margin: 20px 0;
+      }
+
+      button {
+        background: #ff416c;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border-radius: 50px;
+        cursor: pointer;
+        margin: 0 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      #question {
+        margin: 20px 0;
+        font-size: 1.5em;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .read-icon {
+        margin-top: 20px;
+        cursor: pointer;
+        font-size: 2em;
+        color: #fff;
+        animation: bounce 2s infinite;
+      }
+
+      .read-icon:hover {
+        color: #ffdfba;
+      }
+
+      .next-button {
+        margin-top: 30px;
+        background: #28a745;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background 0.3s ease;
+      }
+
+      .next-button:hover {
+        transform: scale(1.1);
+        background: #218838;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        button {
+          padding: 10px 20px;
+          font-size: 1em;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        #question {
+          font-size: 1.2em;
+        }
+      }
+
+      /* Animation Text */
+
+      .styled-text {
+        font-size: 48px;
+        font-weight: bold;
+        color: #3498db; /* Best color: A vibrant blue */
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2),
+          0 0 25px rgba(52, 152, 219, 0.7); /* Shadow effect */
+        letter-spacing: 2px; /* Adding space between letters */
+        text-transform: uppercase; /* Transform text to uppercase */
+        padding: 20px;
+        background-color: rgba(
+          251,
+          219,
+          10,
+          0.875
+        ); /* White background to enhance visibility */
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .styled-text:hover {
+        color: #2ecc71; /* Color change on hover */
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4),
+          0 0 25px rgba(46, 204, 113, 0.7); /* Enhanced shadow on hover */
+        transform: scale(1.1); /* Slightly enlarge text on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="styled-text">Level 1</div>
+      <br />
+      <h2>Mitra AI is Asking a Question ?</h2>
+      <div class="buttons">
+        <button onclick="showQuestion('truth')">Truth</button>
+        <button onclick="showQuestion('dare')">Dare</button>
+      </div>
+      <div id="question">Click a button to see your question!</div>
+      <div class="read-icon" onclick="readQuestion()">🔊</div>
+      <button class="next-button" onclick="goToNextLevel()">
+        Next Level →
+      </button>
+    </div>
+
+    <script>
+      const questions = {
+        truth: [
+          "What is your most embarrassing moment?",
+          "Have you ever lied to your best friend?",
+          "What is a secret you have never told anyone?",
+        ],
+        dare: [
+          "Do 20 push-ups right now!",
+          "Sing a song loudly in public.",
+          "Dance for one minute without music.",
+        ],
+      };
+
+      const questionElement = document.getElementById("question");
+
+      function showQuestion(type) {
+        const randomIndex = Math.floor(Math.random() * questions[type].length);
+        questionElement.textContent = questions[type][randomIndex];
+      }
+
+      function readQuestion() {
+        const speech = new SpeechSynthesisUtterance(
+          questionElement.textContent
+        );
+        speech.lang = "en-US";
+        speech.pitch = 1;
+        speech.rate = 1;
+        speech.volume = 1;
+        speech.voice =
+          speechSynthesis
+            .getVoices()
+            .find((voice) => voice.name.includes("Female")) ||
+          speechSynthesis.getVoices()[0];
+        window.speechSynthesis.speak(speech);
+      }
+
+      function goToNextLevel() {
+        window.location.href = "https://abdulwahedsabri.github.io/Level2/"; // Update with the correct link to the next level
+      }
+
+      // Ensure voices are loaded properly
+      if (
+        typeof speechSynthesis !== "undefined" &&
+        speechSynthesis.onvoiceschanged !== undefined
+      ) {
+        speechSynthesis.onvoiceschanged = () => {};
+      }
+    </script>
+  </body>
+</html>
